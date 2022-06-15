@@ -1,7 +1,12 @@
 import './App.css';
+import FullWidthTextField from './Components/FullWidthTextField';
 
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <FullWidthTextField />
+    </div>
+  );
 }
 
 export default App;
