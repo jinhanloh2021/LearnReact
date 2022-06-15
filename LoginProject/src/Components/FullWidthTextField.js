@@ -19,7 +19,7 @@ const CustomCssTextFieldComponent = styled(TextField)({
       borderColor: '#3c608e',
     },
     '&:hover fieldset': {
-      borderColor: '#273E5C',
+      borderColor: '#9EB9DB',
     },
     '&.Mui-focused fieldset': {
       borderColor: 'green',
@@ -35,7 +35,11 @@ export default function FullWidthTextField() {
   return (
     <Box
       sx={{
-        margin: 'auto',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        marginLeft: 'auto',
+        marginRight: 'auto',
         marginTop: '10px',
         width: 500,
         maxWidth: '100%',
