@@ -16,10 +16,10 @@ export default function TextFieldWrapper() {
   return (
     <div style={positioningStyle}>
       <div>
-        <FullWidthTextField label="Username" />
+        <FullWidthTextField label="Name" />
       </div>
       <div>
-        <FullWidthTextField label="Password" />
+        <FullWidthTextField label="Age" />
       </div>
     </div>
   );

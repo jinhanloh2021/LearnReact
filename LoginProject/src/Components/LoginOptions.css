@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400&family=Montserrat&family=Roboto:wght@300;400;500;700&family=Ubuntu&display=swap');
+.paraStyle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  margin-top: 9.6px;
+}
+
+.forgotPassword {
+  position: relative;
+  height: 42px;
+  float: right;
+  top: 20px;
+  right: 17%;
+}

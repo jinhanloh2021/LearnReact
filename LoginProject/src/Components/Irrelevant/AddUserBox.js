@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const LoginBox = styled.div`
+const AddUserBox = styled.div`
   position: static;
   width: 600px;
   height: 500px;
@@ -13,4 +13,4 @@ const LoginBox = styled.div`
   border-radius: 10px;
 `;
 
-export default LoginBox;
+export default AddUserBox;

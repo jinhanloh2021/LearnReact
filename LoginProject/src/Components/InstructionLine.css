@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400&family=Montserrat&family=Ubuntu&display=swap');
+p {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #224957;
+  /* margin-bottom: 30px; */
+}

@@ -1,12 +1,17 @@
 import './App.css';
-import LoginBox from './Components/LoginBox';
-import TextFieldWrapper from './Components/TextFieldWrapper';
+import SignInDiv from './Components/SignInDiv';
+
+const vectorStyle = {
+  position: 'fixed',
+  bottom: 0,
+  width: '100%',
+};
 
 function App() {
   return (
     <div>
-      <LoginBox />
-      <TextFieldWrapper />
+      <SignInDiv />
+      <img src="FooterVector.svg" alt="Footer vector" style={vectorStyle} />
     </div>
   );
 }
