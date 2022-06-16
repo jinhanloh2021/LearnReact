@@ -1,12 +1,12 @@
 import './App.css';
-import FullWidthTextField from './Components/FullWidthTextField';
-import Card from './Components/Card';
+import LoginBox from './Components/LoginBox';
+import TextFieldWrapper from './Components/TextFieldWrapper';
 
 function App() {
   return (
     <div>
-      <Card />
-      <FullWidthTextField />
+      <LoginBox />
+      <TextFieldWrapper />
     </div>
   );
 }
