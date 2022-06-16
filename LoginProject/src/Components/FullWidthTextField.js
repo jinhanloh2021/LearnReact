@@ -2,6 +2,9 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
+//trying out Material UI library.
+//trying out customising their components.
+
 const CustomCssTextFieldComponent = styled(TextField)({
   width: 500,
   position: 'relative',
@@ -30,6 +33,7 @@ const CustomCssTextFieldComponent = styled(TextField)({
   },
 });
 
+//correct use of props?
 export default function FullWidthTextField(props) {
   return <CustomCssTextFieldComponent label={props.label} />;
 }

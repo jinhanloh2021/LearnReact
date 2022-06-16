@@ -1,5 +1,7 @@
 import FullWidthTextField from './FullWidthTextField';
 
+//This style variable is really hacky, but if I use FullWidthTextField without divs, they will overlap
+//becaue the position is absolute. I don't want to make two separate components for username and for password. I want to reuse.
 const positioningStyle = {
   position: 'absolute',
   marginLeft: 'auto',
