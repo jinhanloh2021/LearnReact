@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -11,20 +11,30 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      console.log('check validity');
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500);
+    return () => {
+      console.log('cleanup');
+      clearTimeout(timeoutId);
+      // native js method. When new keystroke is registered within 500ms of the previous, the cleanup() is called ,
+      // which clearTimout of the previous useEffect that has not executed. This debounces the validation.
+      // setFormIsValid will only run if a keystroke is not pressed for 500ms.
+    };
+    //cleanup function. Runs before the useEffect function runs, except for the first time, and on unmount.
+    //Implement concepts such as debouncing and throttling in cleanup function
+  }, [enteredEmail, enteredPassword]);
+
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
-
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
   };
 
   const validateEmailHandler = () => {
