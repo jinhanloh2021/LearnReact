@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -9,19 +9,55 @@ const ACTIONS = {
   EMAIL_BLUR: 'email-blur',
   PASSWORD_CHANGE: 'password-change',
   PASSWORD_BLUR: 'password-blur',
+  FORM_VALID: 'form-valid',
 };
+
+function validateEmail(email) {
+  return email.includes('@');
+}
+function validatePassword(password) {
+  return password.length >= 6;
+}
 
 //called when dispatchForm is called, which is when we want to update the form state.
 const formReducer = (lastState, action) => {
   switch (action.type) {
     case ACTIONS.EMAIL_CHANGE:
-      return { ...lastState, email: action.payload };
+      const emailChangeValid = validateEmail(action.payload);
+      return {
+        ...lastState,
+        email: action.payload,
+        emailValid: emailChangeValid,
+        // formValid: emailChangeValid && lastState.passwordValid,
+      };
     case ACTIONS.EMAIL_BLUR:
-      return { ...lastState, emailValid: lastState.email.includes('@') };
+      const emailBlurValid = lastState.email.includes('@');
+      return {
+        ...lastState,
+        emailValid: emailBlurValid,
+        formValid:
+          emailBlurValid &&
+          lastState.passwordValid &&
+          lastState.password.length,
+      };
     case ACTIONS.PASSWORD_CHANGE:
-      return { ...lastState, password: action.payload };
+      const passwordChangeValid = validatePassword(action.payload);
+      return {
+        ...lastState,
+        password: action.payload,
+        passwordValid: passwordChangeValid,
+        // formValid: passwordChangeValid && lastState.emailValid,
+      };
     case ACTIONS.PASSWORD_BLUR:
-      return { ...lastState, passwordValid: lastState.password.length >= 6 };
+      const passwordBlurValid = validatePassword(lastState.password);
+      return {
+        ...lastState,
+        passwordValid: passwordBlurValid,
+        formValid:
+          passwordBlurValid && lastState.emailValid && lastState.email.length,
+      };
+    case ACTIONS.FORM_VALID:
+      return { ...lastState, formValid: action.payload };
     default:
       return lastState;
   }
@@ -39,25 +75,31 @@ const Login = (props) => {
     emailValid: true,
     password: '',
     passwordValid: true,
+    formValid: false,
   });
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     console.log('check validity');
-  //     setFormIsValid(
-  //       enteredEmail.includes('@') && enteredPassword.trim().length > 6
-  //     );
-  //   }, 500);
-  //   return () => {
-  //     console.log('cleanup');
-  //     clearTimeout(timeoutId);
-  //     // native js method. When new keystroke is registered within 500ms of the previous, the cleanup() is called ,
-  //     // which clearTimeout of the previous useEffect that has not executed. This debounces the validation.
-  //     // setFormIsValid will only run if a keystroke is not pressed for 500ms.
-  //   };
-  //   //cleanup function. Runs before the useEffect function runs, except for the first time, and on unmount.
-  //   //Implement concepts such as debouncing and throttling in cleanup function
-  // }, [enteredEmail, enteredPassword]);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      console.log('check validity');
+      dispatchForm({
+        type: ACTIONS.FORM_VALID,
+        payload:
+          formState.emailValid &&
+          formState.passwordValid &&
+          formState.password.length &&
+          formState.email.length,
+      }); //have to check for length, because default value for valid are true, so that box is not red on page load.
+    }, 500);
+    return () => {
+      console.log('cleanup');
+      clearTimeout(timeoutId);
+      // native js method. When new keystroke is registered within 500ms of the previous, the cleanup() is called ,
+      // which clearTimeout of the previous useEffect that has not executed. This debounces the validation.
+      // dispatchForm will only run if a keystroke is not pressed for 500ms.
+    };
+    //cleanup function. Runs before the useEffect function runs, except for the first time, and on unmount.
+    //Implement concepts such as debouncing and throttling in cleanup function
+  }, [formState.emailValid, formState.passwordValid]);
 
   const emailChangeHandler = (event) => {
     dispatchForm({ type: ACTIONS.EMAIL_CHANGE, payload: event.target.value }); //sent to formReducer as action object.
@@ -118,12 +160,7 @@ const Login = (props) => {
           <Button
             type="submit"
             className={classes.btn}
-            disabled={
-              !formState.emailValid ||
-              !formState.passwordValid ||
-              !formState.password.length ||
-              !formState.email.length
-            }
+            disabled={!formState.formValid}
           >
             Login
           </Button>
