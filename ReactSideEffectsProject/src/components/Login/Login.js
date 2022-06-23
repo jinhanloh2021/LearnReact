@@ -1,8 +1,10 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useContext, useRef } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import Input from '../UI/Input/Input';
+import AuthContext from '../../store/auth-context';
 
 const ACTIONS = {
   EMAIL_CHANGE: 'email-change',
@@ -63,18 +65,14 @@ const formReducer = (lastState, action) => {
   }
 };
 
-const Login = (props) => {
-  // const [enteredEmail, setEnteredEmail] = useState('');
-  // const [emailIsValid, setEmailIsValid] = useState();
-  // const [enteredPassword, setEnteredPassword] = useState('');
-  // const [passwordIsValid, setPasswordIsValid] = useState();
-  // const [formIsValid, setFormIsValid] = useState(false);
+const Login = () => {
+  const context = useContext(AuthContext);
 
   const [formState, dispatchForm] = useReducer(formReducer, {
     email: '',
-    emailValid: true,
+    emailValid: false,
     password: '',
-    passwordValid: true,
+    passwordValid: false,
     formValid: false,
   });
 
@@ -83,12 +81,8 @@ const Login = (props) => {
       console.log('check validity');
       dispatchForm({
         type: ACTIONS.FORM_VALID,
-        payload:
-          formState.emailValid &&
-          formState.passwordValid &&
-          formState.password.length &&
-          formState.email.length,
-      }); //have to check for length, because default value for valid are true, so that box is not red on page load.
+        payload: formState.emailValid && formState.passwordValid,
+      });
     }, 500);
     return () => {
       console.log('cleanup');
@@ -100,6 +94,9 @@ const Login = (props) => {
     //cleanup function. Runs before the useEffect function runs, except for the first time, and on unmount.
     //Implement concepts such as debouncing and throttling in cleanup function
   }, [formState.emailValid, formState.passwordValid]);
+
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
   const emailChangeHandler = (event) => {
     dispatchForm({ type: ACTIONS.EMAIL_CHANGE, payload: event.target.value }); //sent to formReducer as action object.
@@ -122,46 +119,40 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(formState.email, formState.password);
+    if (formState.formValid) {
+      context.onLogin(formState.email, formState.password);
+    } else if (!formState.emailValid) {
+      emailInputRef.current.activate();
+    } else {
+      passwordInputRef.current.activate();
+    }
   };
 
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
-        <div
-          className={`${classes.control} ${
-            !formState.emailValid ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor="email">E-Mail</label>
-          <input
-            type="email"
-            id="email"
-            value={formState.email}
-            onChange={emailChangeHandler}
-            onBlur={validateEmailHandler} //On blur is the opposite of focus. When user clicks out of text box.
-          />
-        </div>
-        <div
-          className={`${classes.control} ${
-            !formState.passwordValid ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={formState.password}
-            onChange={passwordChangeHandler}
-            onBlur={validatePasswordHandler}
-          />
-        </div>
+        <Input
+          id="email"
+          label="Email"
+          type="email"
+          isValid={formState.emailValid || formState.email.length === 0}
+          value={formState.email}
+          onChange={emailChangeHandler}
+          obBlur={validateEmailHandler}
+          ref={emailInputRef}
+        />
+        <Input
+          id="password"
+          label="Password"
+          type="password"
+          isValid={formState.passwordValid || formState.password.length === 0}
+          value={formState.password}
+          onChange={passwordChangeHandler}
+          obBlur={validatePasswordHandler}
+          ref={passwordInputRef}
+        />
         <div className={classes.actions}>
-          <Button
-            type="submit"
-            className={classes.btn}
-            disabled={!formState.formValid}
-          >
+          <Button type="submit" className={classes.btn}>
             Login
           </Button>
         </div>
