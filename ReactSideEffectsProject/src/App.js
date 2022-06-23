@@ -8,9 +8,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (+localStorage.getItem('isLoggedIn')) {
-      setIsLoggedIn(true);
-    }
+    if (+localStorage.getItem('isLoggedIn')) setIsLoggedIn(true);
   }, []);
   //dependency: [], useEffect() will run after first render
   //dependency: void, useEffect() will run after every render
