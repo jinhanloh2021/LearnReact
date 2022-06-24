@@ -2,12 +2,14 @@ import React from 'react';
 import './availableMeals.scss';
 import Card from '../UI/Card';
 import MealItem from './mealItem/MealItem';
+import { keyboard } from '@testing-library/user-event/dist/keyboard';
 
 export type Meal = {
   id: string;
   name: string;
   description: string;
   price: number;
+  key?: string;
 };
 
 const DUMMY_MEALS: Meal[] = [
@@ -39,7 +41,15 @@ const DUMMY_MEALS: Meal[] = [
 
 export default function AvailableMeals() {
   const mealsList = DUMMY_MEALS.map((meal) => {
-    return <MealItem {...meal} />;
+    return (
+      <MealItem
+        id={meal.id}
+        name={meal.name}
+        description={meal.description}
+        price={meal.price}
+        key={meal.id}
+      />
+    );
   });
   return (
     <section className="meals">

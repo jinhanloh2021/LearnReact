@@ -11,13 +11,20 @@ type Props = {
     step?: string;
     defaultValue?: string;
   };
+  // ref: React.MutableRefObject<null>;
 };
 
-export default function Input({ label, input }: Props) {
-  return (
-    <div className="input">
-      <label htmlFor={input.id}>{label}</label>
-      <input {...input} />
-    </div>
-  );
-}
+//forwardRef with Typescript is an absolute PAIN. Don't forget this.
+//Must state the element type we are referencing, and provide the props parameter
+const Input = React.forwardRef<HTMLInputElement, Props>(
+  ({ label, input }: Props, ref: React.ForwardedRef<HTMLInputElement>) => {
+    return (
+      <div className="input">
+        <label htmlFor={input.id}>{label}</label>
+        <input ref={ref} {...input} />
+      </div>
+    );
+  }
+);
+
+export default Input;
