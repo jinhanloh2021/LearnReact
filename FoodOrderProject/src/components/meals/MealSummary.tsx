@@ -1,9 +1,9 @@
 import React from 'react';
 import './mealSummary.scss';
 
-type Props = {};
+// type Props = {};
 
-export default function MealSummary({}: Props) {
+export default function MealSummary() {
   return (
     <section className="summary">
       <h2>Delicious Food, Delivered To You</h2>

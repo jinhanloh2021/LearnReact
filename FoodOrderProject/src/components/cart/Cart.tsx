@@ -6,8 +6,8 @@ type Props = {
   onCloseCart: () => void;
 };
 
-export default function Cart({ onCloseCart }: Props) {
-  const cartItems = (
+export default function Cart({ onCloseCart }: Props): JSX.Element {
+  const cartItems: JSX.Element = (
     <ul className="cart-items">
       {[{ id: 'c1', name: 'Sushi', amount: 2, price: 12.99 }].map((item) => (
         <li>{item.name}</li>

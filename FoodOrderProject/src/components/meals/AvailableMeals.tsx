@@ -3,7 +3,14 @@ import './availableMeals.scss';
 import Card from '../UI/Card';
 import MealItem from './mealItem/MealItem';
 
-const DUMMY_MEALS = [
+export type Meal = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+};
+
+const DUMMY_MEALS: Meal[] = [
   {
     id: 'm1',
     name: 'Sushi',
@@ -32,14 +39,7 @@ const DUMMY_MEALS = [
 
 export default function AvailableMeals() {
   const mealsList = DUMMY_MEALS.map((meal) => {
-    return (
-      <MealItem
-        key={meal.id}
-        name={meal.name}
-        description={meal.description}
-        price={meal.price}
-      />
-    );
+    return <MealItem {...meal} />;
   });
   return (
     <section className="meals">

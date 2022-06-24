@@ -2,9 +2,9 @@ import React from 'react';
 import MealSummary from './MealSummary';
 import AvailableMeals from './AvailableMeals';
 
-type Props = {};
+// type Props = {};
 
-export default function Meals({}: Props) {
+export default function Meals() {
   return (
     <>
       <MealSummary />

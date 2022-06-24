@@ -2,7 +2,7 @@
   max-width: 60rem;
   width: 90%;
   margin: 2rem auto;
-  animation: meals-appear 1s ease-out forwards;
+  animation: meals-appear 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
   ul {
     list-style: none;
     margin: 0;

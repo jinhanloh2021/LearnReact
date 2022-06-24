@@ -1,13 +1,16 @@
 .form {
+  display: inherit;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: right;
   button {
     font: inherit;
     cursor: pointer;
     background-color: #8a2b06;
-    border: 1px solid #8a2b06;
+    border: none;
     color: white;
-    padding: 0.25rem 2rem;
-    border-radius: 20px;
+    padding: 0.3rem 1rem 0.3rem 0.75rem;
+    border-radius: 150px;
     font-weight: bold;
     &:hover,
     &:active {

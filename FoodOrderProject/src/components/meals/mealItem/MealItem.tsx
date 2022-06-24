@@ -1,15 +1,9 @@
 import React from 'react';
 import './mealItem.scss';
 import MealItemForm from './MealItemForm';
+import { Meal } from '../AvailableMeals';
 
-type Props = {
-  key: string;
-  name: string;
-  description: string;
-  price: number;
-};
-
-export default function MealItem({ key, name, description, price }: Props) {
+export default function MealItem({ id, name, description, price }: Meal) {
   const formattedPrice = `$${price.toFixed(2)}`;
   return (
     <li className="meal">
@@ -18,8 +12,8 @@ export default function MealItem({ key, name, description, price }: Props) {
         <div className="description">{description}</div>
         <div className="price">{formattedPrice}</div>
       </div>
-      <div>
-        <MealItemForm mealId={key} />
+      <div className="meal-item-form-div">
+        <MealItemForm id={id} />
       </div>
     </li>
   );
