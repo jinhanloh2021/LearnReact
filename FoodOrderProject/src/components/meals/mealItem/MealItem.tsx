@@ -4,7 +4,7 @@ import MealItemForm from './MealItemForm';
 import { Meal } from '../AvailableMeals';
 import CartContext from '../../../store/cart-context';
 
-export default function MealItem({ id, name, description, price, key}: Meal) {
+export default function MealItem({ id, name, description, price, key }: Meal) {
   const cartContext = useContext(CartContext); //get the cart state, and use function.
   const addToCartHandler = (amount: number) => {
     cartContext.addItem({
