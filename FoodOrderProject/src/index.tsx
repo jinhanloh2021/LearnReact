@@ -6,8 +6,5 @@ import './index.css';
 const root: ReactDOM.Root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+//BUG: strictMode cause the reducer function to execute twice
+root.render(<App />);

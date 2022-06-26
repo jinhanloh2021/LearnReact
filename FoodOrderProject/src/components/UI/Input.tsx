@@ -6,10 +6,10 @@ type Props = {
   input: {
     id: string;
     type: string;
-    min?: string;
-    max?: string;
-    step?: string;
-    defaultValue?: string;
+    min: string;
+    max: string;
+    step: string;
+    defaultValue: string;
   };
   // ref: React.MutableRefObject<null>;
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import './availableMeals.scss';
 import Card from '../UI/Card';
 import MealItem from './mealItem/MealItem';
-import { keyboard } from '@testing-library/user-event/dist/keyboard';
 
 export type Meal = {
   id: string;
@@ -40,7 +39,7 @@ const DUMMY_MEALS: Meal[] = [
 ];
 
 export default function AvailableMeals() {
-  const mealsList = DUMMY_MEALS.map((meal) => {
+  const mealsList: JSX.Element[] = DUMMY_MEALS.map((meal) => {
     return (
       <MealItem
         id={meal.id}

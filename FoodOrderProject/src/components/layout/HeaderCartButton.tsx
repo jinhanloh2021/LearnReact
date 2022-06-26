@@ -10,18 +10,18 @@ type Props = {
 export default function HeaderCartButton({ onClick }: Props) {
   const cartContext = useContext(CartContext); //component re-rendered whenever context changes.
 
-  //Sums all item.amount to get total numCartItems. Displays on the header.
-  const numCartItems = cartContext.items.reduce((currentNum, item) => {
+  //Iterates through Item[], sums up all amounts.
+  const numCartItems: number = cartContext.items.reduce((currentNum, item) => {
     return currentNum + (item.amount || 0); //item can be undefined
   }, 0);
 
   return (
-    <button className="button" onClick={onClick}>
-      <span className="icon">
+    <button className="header-cart-button" onClick={onClick}>
+      <span className="header-icon">
         <CartIcon />
       </span>
       <span>Your Cart</span>
-      <span className="badge">{numCartItems}</span>
+      <span className="header-badge">{numCartItems}</span>
     </button>
   );
 }
