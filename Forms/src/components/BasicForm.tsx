@@ -1,6 +1,4 @@
-import React from 'react';
-
-export default function BasicForm() {
+const BasicForm = () => {
   return (
     <form>
       <div className="control-group">
@@ -22,4 +20,6 @@ export default function BasicForm() {
       </div>
     </form>
   );
-}
+};
+
+export default BasicForm;
