@@ -8,8 +8,7 @@ import useInput from '../Hooks/useInput';
 const SimpleInput = () => {
   const {
     enteredValue: enteredName,
-    setEnteredValue: setEnteredName,
-    setEnteredValueTouched: setEnteredNameTouched,
+    resetInput: resetName,
     enteredValueIsValid: enteredNameIsValid,
     valueRenderError: nameRenderError,
     valueInputChangeHandler: nameInputChangeHandler,
@@ -18,8 +17,7 @@ const SimpleInput = () => {
 
   const {
     enteredValue: enteredEmail,
-    setEnteredValue: setEnteredEmail,
-    setEnteredValueTouched: setEnteredEmailTouched,
+    resetInput: resetEmail,
     enteredValueIsValid: enteredEmailIsValid,
     valueRenderError: emailRenderError,
     valueInputChangeHandler: emailInputChangeHandler,
@@ -27,20 +25,17 @@ const SimpleInput = () => {
   } = useInput(emailValidator);
 
   //overall formValidState
-  const formValid = enteredNameIsValid && enteredEmailIsValid; // && enteredAgeIsValid && ...
+  const formValid = enteredNameIsValid && enteredEmailIsValid;
 
   const formSubmissionHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setEnteredNameTouched(true);
     if (!formValid) {
       return;
     }
     console.log(`Name: ${enteredName}\nEmail: ${enteredEmail}`); //using state gets value on every keystroke
 
-    setEnteredName('');
-    setEnteredNameTouched(false);
-    setEnteredEmail('');
-    setEnteredEmailTouched(false);
+    resetName();
+    resetEmail();
   };
 
   return (

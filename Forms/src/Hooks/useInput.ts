@@ -18,10 +18,14 @@ export default function useInput(validator: (enteredValue: string) => boolean) {
     setEnteredValueTouched(true);
   };
 
+  function resetInput():void {
+    setEnteredValue('');
+    setEnteredValueTouched(false);
+  }
+
   return {
     enteredValue,
-    setEnteredValue,
-    setEnteredValueTouched,
+    resetInput,
     enteredValueIsValid,
     valueRenderError,
     valueInputChangeHandler,
