@@ -1,9 +1,8 @@
 import React from 'react';
-import NameInput from './NameInput';
-import EmailInput from './EmailInput';
+import Input from './Input';
 import nameValidator from './nameValidator';
 import emailValidator from './emailValidator';
-import useInput from '../Hooks/useInput';
+import useInput from '../../Hooks/useInput';
 
 const SimpleInput = () => {
   const {
@@ -40,17 +39,21 @@ const SimpleInput = () => {
 
   return (
     <form onSubmit={formSubmissionHandler}>
-      <NameInput
-        enteredName={enteredName}
-        nameInputChangeHandler={nameInputChangeHandler}
-        nameInputBlurHandler={nameInputBlurHandler}
-        nameRenderError={nameRenderError}
+      <Input
+        enteredValue={enteredName}
+        valueInputChangeHandler={nameInputChangeHandler}
+        valueInputBlurHandler={nameInputBlurHandler}
+        valueRenderError={nameRenderError}
+        label="Name"
+        errMessage="Name cannot be empty."
       />
-      <EmailInput
-        enteredEmail={enteredEmail}
-        emailInputChangeHandler={emailInputChangeHandler}
-        emailInputBlurHandler={emailInputBlurHandler}
-        emailRenderError={emailRenderError}
+      <Input
+        enteredValue={enteredEmail}
+        valueInputChangeHandler={emailInputChangeHandler}
+        valueInputBlurHandler={emailInputBlurHandler}
+        valueRenderError={emailRenderError}
+        label="Email"
+        errMessage="Invalid Email."
       />
       <div className="form-actions">
         <button disabled={!formValid}>Submit</button>
