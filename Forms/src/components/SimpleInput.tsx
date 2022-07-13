@@ -1,53 +1,62 @@
-import React, { MutableRefObject } from 'react';
-import { useState } from 'react';
+import React from 'react';
+import NameInput from './NameInput';
+import EmailInput from './EmailInput';
+import nameValidator from './nameValidator';
+import emailValidator from './emailValidator';
+import useInput from '../Hooks/useInput';
 
 const SimpleInput = () => {
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
+  const {
+    enteredValue: enteredName,
+    setEnteredValue: setEnteredName,
+    setEnteredValueTouched: setEnteredNameTouched,
+    enteredValueIsValid: enteredNameIsValid,
+    valueRenderError: nameRenderError,
+    valueInputChangeHandler: nameInputChangeHandler,
+    valueInputBlurHandler: nameInputBlurHandler,
+  } = useInput(nameValidator);
 
-  const enteredNameIsValid = enteredName.trim() !== '';
-  const renderError = enteredName.trim() === '' && enteredNameTouched;
+  const {
+    enteredValue: enteredEmail,
+    setEnteredValue: setEnteredEmail,
+    setEnteredValueTouched: setEnteredEmailTouched,
+    enteredValueIsValid: enteredEmailIsValid,
+    valueRenderError: emailRenderError,
+    valueInputChangeHandler: emailInputChangeHandler,
+    valueInputBlurHandler: emailInputBlurHandler,
+  } = useInput(emailValidator);
 
   //overall formValidState
-  const formValid = enteredNameIsValid; // && enteredAgeIsValid && ...
-
-  const nameInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEnteredName(e.target.value);
-  };
-
-  const nameInputBlurHandler = (
-    e: React.FocusEvent<HTMLInputElement, Element>
-  ) => {
-    setEnteredNameTouched(true);
-  };
+  const formValid = enteredNameIsValid && enteredEmailIsValid; // && enteredAgeIsValid && ...
 
   const formSubmissionHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setEnteredNameTouched(true);
-
-    if (renderError) {
+    if (!formValid) {
       return;
     }
-    console.log(`Submission: ${enteredName}`); //using state gets value on every keystroke
+    console.log(`Name: ${enteredName}\nEmail: ${enteredEmail}`); //using state gets value on every keystroke
 
     setEnteredName('');
     setEnteredNameTouched(false);
+    setEnteredEmail('');
+    setEnteredEmailTouched(false);
   };
 
   return (
     <form onSubmit={formSubmissionHandler}>
-      <div className={!renderError ? 'form-control' : 'form-control invalid'}>
-        <label htmlFor="name">Your Name</label>
-        <input
-          // ref={nameInputRef}
-          type="text"
-          id="name"
-          onChange={nameInputChangeHandler}
-          onBlur={nameInputBlurHandler}
-          value={enteredName}
-        />
-        {!renderError || <p className="error-text">Name must not be empty.</p>}
-      </div>
+      <NameInput
+        enteredName={enteredName}
+        nameInputChangeHandler={nameInputChangeHandler}
+        nameInputBlurHandler={nameInputBlurHandler}
+        nameRenderError={nameRenderError}
+      />
+      <EmailInput
+        enteredEmail={enteredEmail}
+        emailInputChangeHandler={emailInputChangeHandler}
+        emailInputBlurHandler={emailInputBlurHandler}
+        emailRenderError={emailRenderError}
+      />
       <div className="form-actions">
         <button disabled={!formValid}>Submit</button>
       </div>
