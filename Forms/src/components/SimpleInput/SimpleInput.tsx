@@ -6,32 +6,35 @@ import useInput from '../../Hooks/useInput';
 
 const SimpleInput = () => {
   const {
-    enteredValue: enteredName,
+    valueState: nameState,
     resetInput: resetName,
-    enteredValueIsValid: enteredNameIsValid,
-    valueRenderError: nameRenderError,
     valueInputChangeHandler: nameInputChangeHandler,
     valueInputBlurHandler: nameInputBlurHandler,
   } = useInput(nameValidator);
+  const nameLabel = 'Name';
+  const nameErrMessage = 'Name cannot be empty.';
 
   const {
-    enteredValue: enteredEmail,
+    valueState: emailState,
     resetInput: resetEmail,
-    enteredValueIsValid: enteredEmailIsValid,
-    valueRenderError: emailRenderError,
     valueInputChangeHandler: emailInputChangeHandler,
     valueInputBlurHandler: emailInputBlurHandler,
   } = useInput(emailValidator);
+  const emailLabel = 'Email';
+  const emailErrMessage = 'Invalid Email.';
 
   //overall formValidState
-  const formValid = enteredNameIsValid && enteredEmailIsValid;
+  const formValid =
+    nameState.enteredValueIsValid && emailState.enteredValueIsValid;
 
   const formSubmissionHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formValid) {
       return;
     }
-    console.log(`Name: ${enteredName}\nEmail: ${enteredEmail}`); //using state gets value on every keystroke
+    console.log(
+      `Name: ${nameState.enteredValue}\nEmail: ${emailState.enteredValue}`
+    ); //using state gets value on every keystroke
 
     resetName();
     resetEmail();
@@ -40,20 +43,20 @@ const SimpleInput = () => {
   return (
     <form onSubmit={formSubmissionHandler}>
       <Input
-        enteredValue={enteredName}
+        enteredValue={nameState.enteredValue}
         valueInputChangeHandler={nameInputChangeHandler}
         valueInputBlurHandler={nameInputBlurHandler}
-        valueRenderError={nameRenderError}
-        label="Name"
-        errMessage="Name cannot be empty."
+        valueRenderError={nameState.valueRenderError}
+        label={nameLabel}
+        errMessage={nameErrMessage}
       />
       <Input
-        enteredValue={enteredEmail}
+        enteredValue={emailState.enteredValue}
         valueInputChangeHandler={emailInputChangeHandler}
         valueInputBlurHandler={emailInputBlurHandler}
-        valueRenderError={emailRenderError}
-        label="Email"
-        errMessage="Invalid Email."
+        valueRenderError={emailState.valueRenderError}
+        label={emailLabel}
+        errMessage={emailErrMessage}
       />
       <div className="form-actions">
         <button disabled={!formValid}>Submit</button>

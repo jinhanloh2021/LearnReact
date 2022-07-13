@@ -1,39 +1,35 @@
 import Input from '../SimpleInput/Input';
 import useInput from '../../Hooks/useInput';
-import emailValidator from './emailValidator';
-import nameValidator from './nameValidator';
+import emailValidator from '../SimpleInput/emailValidator';
+import nameValidator from '../SimpleInput/nameValidator';
 
 const BasicForm = () => {
   const {
-    enteredValue: enteredFirstName,
+    valueState: firstNameState,
     resetInput: resetFirstName,
-    enteredValueIsValid: enteredFirstNameIsValid,
-    valueRenderError: firstNameRenderError,
     valueInputChangeHandler: firstNameInputChangeHandler,
     valueInputBlurHandler: firstNameInputBlurHandler,
   } = useInput(nameValidator);
 
   const {
-    enteredValue: enteredLastName,
+    valueState: lastNameState,
     resetInput: resetLastName,
-    enteredValueIsValid: enteredLastNameIsValid,
-    valueRenderError: lastNameRenderError,
     valueInputChangeHandler: lastNameInputChangeHandler,
     valueInputBlurHandler: lastNameInputBlurHandler,
   } = useInput(nameValidator);
 
   const {
-    enteredValue: enteredEmail,
+    valueState: emailState,
     resetInput: resetEmail,
-    enteredValueIsValid: enteredEmailIsValid,
-    valueRenderError: emailRenderError,
     valueInputChangeHandler: emailInputChangeHandler,
     valueInputBlurHandler: emailInputBlurHandler,
   } = useInput(emailValidator);
 
   //manage overall form validity
   const formValid =
-    enteredFirstNameIsValid && enteredLastNameIsValid && enteredEmailIsValid;
+    firstNameState.enteredValueIsValid &&
+    lastNameState.enteredValueIsValid &&
+    emailState.enteredValueIsValid;
 
   function formSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,7 +38,7 @@ const BasicForm = () => {
     }
 
     console.log(
-      `Hello ${enteredFirstName} ${enteredLastName}!\nYour email is: ${enteredEmail}`
+      `Hello ${firstNameState.enteredValue} ${lastNameState.enteredValue}!\nYour email is: ${emailState.enteredValue}`
     );
     resetFirstName();
     resetLastName();
@@ -53,27 +49,27 @@ const BasicForm = () => {
     <form onSubmit={formSubmitHandler}>
       <div className="control-group">
         <Input
-          enteredValue={enteredFirstName}
+          enteredValue={firstNameState.enteredValue}
           valueInputChangeHandler={firstNameInputChangeHandler}
           valueInputBlurHandler={firstNameInputBlurHandler}
-          valueRenderError={firstNameRenderError}
+          valueRenderError={firstNameState.valueRenderError}
           label="First Name"
           errMessage="First name cannot be empty."
         />
         <Input
-          enteredValue={enteredLastName}
+          enteredValue={lastNameState.enteredValue}
           valueInputChangeHandler={lastNameInputChangeHandler}
           valueInputBlurHandler={lastNameInputBlurHandler}
-          valueRenderError={lastNameRenderError}
+          valueRenderError={lastNameState.valueRenderError}
           label="Last Name"
           errMessage="Last name cannot be empty."
         />
       </div>
       <Input
-        enteredValue={enteredEmail}
+        enteredValue={emailState.enteredValue}
         valueInputChangeHandler={emailInputChangeHandler}
         valueInputBlurHandler={emailInputBlurHandler}
-        valueRenderError={emailRenderError}
+        valueRenderError={emailState.valueRenderError}
         label="Email-address"
         errMessage="Invalid email address"
       />
